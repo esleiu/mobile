@@ -1,0 +1,506 @@
+import React, { useState, useEffect } from 'react';
+import { AlertTriangle, Disc, Folder, X, UserX, Skull, Eye, Check } from 'lucide-react';
+
+const Win95Box = ({ children, className = '' }) => (
+  <div className={`bg-[#C0C0C0] border-2 border-t-white border-l-white border-b-black border-r-black p-1 ${className}`}>
+    {children}
+  </div>
+);
+
+const Win95Inset = ({ children, className = '' }) => (
+  <div className={`bg-white border-2 border-t-[#808080] border-l-[#808080] border-b-white border-r-white p-1 ${className}`}>
+    {children}
+  </div>
+);
+
+const Win95Button = ({ children, onClick, className = '', disabled = false, active = false }) => {
+  const [isPressed, setIsPressed] = useState(active);
+
+  return (
+    <button
+      onMouseDown={() => !disabled && !active && setIsPressed(true)}
+      onMouseUp={() => !disabled && !active && setIsPressed(false)}
+      onMouseLeave={() => !disabled && !active && setIsPressed(false)}
+      onClick={onClick}
+      disabled={disabled}
+      className={`bg-[#C0C0C0] px-4 py-1 text-sm font-bold text-black focus:outline-none flex items-center justify-center gap-2
+        ${disabled ? 'text-[#808080]' : ''}
+        ${isPressed || active 
+          ? 'border-2 border-t-black border-l-black border-b-white border-r-white pt-[5px] pb-[3px] pl-[17px] pr-[15px]' 
+          : 'border-2 border-t-white border-l-white border-b-black border-r-black pt-[4px] pb-[4px] pl-[16px] pr-[16px]'
+        } ${className}`}
+    >
+      {children}
+    </button>
+  );
+};
+
+const Win95Checkbox = ({ label, checked, onChange }) => (
+  <label className="flex items-center gap-2 cursor-pointer select-none">
+    <div className="w-4 h-4 bg-white border-2 border-t-[#808080] border-l-[#808080] border-b-white border-r-white flex items-center justify-center">
+      {checked && <Check size={12} className="text-black" strokeWidth={4} />}
+    </div>
+    <span className="text-sm font-bold text-black">{label}</span>
+  </label>
+);
+
+const FlipCard = ({ title, frontIcon: FrontIcon, backIcon: BackIcon, backText, backColor = 'bg-white', isImpostor = false }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <div
+      className="relative w-32 h-40 cursor-pointer"
+      style={{ perspective: '1000px' }}
+      onClick={() => setIsFlipped(!isFlipped)}
+    >
+      <div
+        className="w-full h-full transition-transform duration-500"
+        style={{
+          transformStyle: 'preserve-3d',
+          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        }}
+      >
+        <div className="absolute w-full h-full" style={{ backfaceVisibility: 'hidden' }}>
+          <Win95Box className="h-full flex flex-col items-center justify-center bg-[#C0C0C0]">
+            <FrontIcon size={48} className="text-black mb-2" />
+            <span className="text-xs font-bold text-center px-1">{title}</span>
+          </Win95Box>
+        </div>
+
+        <div
+          className="absolute w-full h-full"
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+        >
+          <Win95Box className="h-full flex flex-col p-0">
+            <div className="bg-[#000080] px-1 py-[2px] flex justify-between items-center">
+              <span className="text-white font-bold text-[10px]">Resultado</span>
+              <div className="bg-[#C0C0C0] p-[1px] border-t border-l border-white border-b border-r border-black">
+                <X size={8} className="text-black" />
+              </div>
+            </div>
+            <div className={`flex-1 flex flex-col items-center justify-center border-t border-l border-black border-b border-r border-[#E0E0E0] ${backColor}`}>
+              <BackIcon size={40} className={isImpostor ? 'text-red-600 mb-2' : 'text-green-600 mb-2'} />
+              <span className={`text-xs font-bold text-center px-1 ${isImpostor ? 'text-red-600' : 'text-green-700'}`}>
+                {backText}
+              </span>
+            </div>
+          </Win95Box>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AnimatedProgressBar = () => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => (prev >= 100 ? 0 : prev + 5));
+    }, 200);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="w-full h-6 bg-white border-2 border-t-[#808080] border-l-[#808080] border-b-white border-r-white p-[2px]">
+      <div className="h-full flex gap-[2px]">
+        {Array.from({ length: Math.floor(progress / 5) }).map((_, i) => (
+          <div key={i} className="h-full w-3 bg-[#000080]" />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const BlinkingText = () => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => setIsVisible((v) => !v), 500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="bg-black text-[#00FF00] font-mono p-2 border-2 border-t-[#808080] border-l-[#808080] border-b-white border-r-white text-sm h-24 overflow-hidden">
+      <p>{">"} A INICIAR RASTREAMENTO...</p>
+      <p>{">"} A ANALISAR DADOS DE NAVEGACAO</p>
+      <p>{">"} 1 IMPOSTOR RESTANTE.</p>
+      <p>{">"} A AGUARDAR COMANDO<span className={isVisible ? 'opacity-100' : 'opacity-0'}>_</span></p>
+    </div>
+  );
+};
+
+const CountdownTimer = () => {
+  const [time, setTime] = useState(45);
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime((t) => (t > 0 ? t - 1 : 45)), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <Win95Inset className="bg-black flex items-center justify-center p-2">
+      <span className="text-red-600 font-mono text-3xl font-bold tracking-widest">
+        00:{time.toString().padStart(2, '0')}
+      </span>
+    </Win95Inset>
+  );
+};
+
+const WordGameCard = ({ playerName, secretWord, isImpostor }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <div
+      className="relative w-64 h-80 cursor-pointer shrink-0"
+      style={{ perspective: '1000px' }}
+      onClick={() => setIsFlipped(!isFlipped)}
+    >
+      <div
+        className="w-full h-full transition-transform duration-500"
+        style={{
+          transformStyle: 'preserve-3d',
+          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        }}
+      >
+        <div className="absolute w-full h-full" style={{ backfaceVisibility: 'hidden' }}>
+          <Win95Box className="h-full flex flex-col items-center justify-center bg-[#C0C0C0]">
+            <UserX size={48} className="text-black mb-4" />
+            <span className="text-xl font-bold text-center px-1 mb-2">Vez de: {playerName}</span>
+            <span className="text-xs font-bold text-center px-1 mt-4 text-[#808080]">CLICAR PARA REVELAR</span>
+          </Win95Box>
+        </div>
+
+        <div
+          className="absolute w-full h-full"
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+        >
+          <Win95Box className="h-full flex flex-col p-0">
+            <div className="bg-[#000080] px-1 py-[2px] flex justify-between items-center">
+              <span className="text-white font-bold text-xs">A Sua Palavra</span>
+              <div className="bg-[#C0C0C0] p-[1px] border-t border-l border-white border-b border-r border-black">
+                <X size={10} className="text-black" />
+              </div>
+            </div>
+            <div className={`flex-1 flex flex-col items-center justify-center border-t border-l border-black border-b border-r border-[#E0E0E0] ${isImpostor ? 'bg-[#ffcccc]' : 'bg-white'}`}>
+              {isImpostor ? <Skull size={48} className="text-red-600 mb-4" /> : <Eye size={48} className="text-black mb-4" />}
+              <span className="text-sm font-bold text-center px-1 mb-2">
+                {isImpostor ? 'VOCE E O IMPOSTOR!' : 'A PALAVRA SECRETA E:'}
+              </span>
+              <span className={`text-2xl font-bold text-center px-1 ${isImpostor ? 'text-red-600' : 'text-blue-800'}`}>
+                {isImpostor ? '???' : secretWord}
+              </span>
+              <span className="text-xs font-bold text-center px-1 mt-8 text-[#808080]">CLICAR PARA ESCONDER</span>
+            </div>
+          </Win95Box>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const TerminalMobileScreen = () => {
+  const [players, setPlayers] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [isStarted, setIsStarted] = useState(false);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && inputValue.trim()) {
+      const val = inputValue.trim().toUpperCase();
+      if (val === 'START') {
+        setIsStarted(true);
+      } else {
+        if (players.length < 8) {
+          setPlayers([...players, val]);
+        }
+      }
+      setInputValue('');
+    }
+  };
+
+  return (
+    <div className="w-[320px] h-[568px] bg-black border-4 border-[#C0C0C0] p-4 font-mono text-[#00FF00] text-sm overflow-hidden flex flex-col relative shadow-[8px_8px_0px_rgba(0,0,0,0.5)]">
+      <div className="flex-1 overflow-y-auto pb-8">
+        <p className="mb-4">IMPOSTOR_OS v1.0<br/>SYSTEM READY.</p>
+        
+        {players.length > 0 && (
+          <div className="mb-4">
+            <p>--- CONNECTED USERS ---</p>
+            {players.map((p, i) => (
+              <p key={i}>[{i + 1}] {p}</p>
+            ))}
+            <p>-----------------------</p>
+          </div>
+        )}
+
+        {isStarted ? (
+          <p className="animate-pulse mt-4 text-[#00FF00]">INITIALIZING GAME SERVER...<br/>PLEASE WAIT...</p>
+        ) : (
+          <>
+            <p>MAX PLAYERS: 8</p>
+            <p>CURRENT: {players.length}/8</p>
+            <div className="flex mt-4 items-center">
+              <span className="mr-2">{">"}</span>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="bg-transparent text-[#00FF00] outline-none flex-1 uppercase caret-[#00FF00]"
+                autoFocus
+                maxLength={15}
+              />
+            </div>
+            <p className="mt-8 text-[#008000] text-xs">TYPE 'START' AND PRESS ENTER.</p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default function App() {
+  const [toggleState, setToggleState] = useState(false);
+  const [rule1, setRule1] = useState(true);
+  const [rule2, setRule2] = useState(false);
+  const [voted, setVoted] = useState(null);
+
+  return (
+    <div className="min-h-screen bg-[#008080] p-6 font-sans">
+      <div className="max-w-4xl mx-auto space-y-6 pb-12">
+        
+        <Win95Box className="p-4">
+          <h2 className="text-[#000080] font-bold text-lg mb-4 border-b border-[#808080]">1. Cartoes Animados (Flip)</h2>
+          <div className="flex gap-6">
+            <FlipCard 
+              title="Votar no Vermelho?" 
+              frontIcon={UserX} 
+              backIcon={Skull} 
+              backText="ERA O IMPOSTOR" 
+              backColor="bg-[#ffcccc]"
+              isImpostor={true}
+            />
+            <FlipCard 
+              title="Votar no Azul?" 
+              frontIcon={UserX} 
+              backIcon={UserX} 
+              backText="TRIPULANTE" 
+              backColor="bg-[#ccffcc]"
+              isImpostor={false}
+            />
+          </div>
+        </Win95Box>
+
+        <Win95Box className="p-4">
+          <h2 className="text-[#000080] font-bold text-lg mb-4 border-b border-[#808080]">2. Botoes Estilo Windows 95</h2>
+          <div className="flex flex-wrap gap-4 items-center">
+            <Win95Button>Botao Normal</Win95Button>
+            <Win95Button active={true}>Pressionado (Ativo)</Win95Button>
+            <Win95Button disabled={true}>Desativado</Win95Button>
+            
+            <Win95Button onClick={() => setToggleState(!toggleState)} active={toggleState}>
+              <Disc size={16} /> {toggleState ? 'Ligado' : 'Desligado'}
+            </Win95Button>
+
+            <Win95Button>
+              <Folder size={16} fill="#FFD700" className="text-black" /> Abrir Pasta
+            </Win95Button>
+          </div>
+        </Win95Box>
+
+        <Win95Box className="p-4">
+          <h2 className="text-[#000080] font-bold text-lg mb-4 border-b border-[#808080]">3. Elementos de Animacao / UI Basica</h2>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <span className="text-sm font-bold">Barra de Progresso (A calcular...)</span>
+              <AnimatedProgressBar />
+              
+              <div className="mt-4 space-y-2">
+                <span className="text-sm font-bold">Caixa de Entrada</span>
+                <Win95Inset>
+                  <input type="text" className="w-full outline-none text-sm p-1" defaultValue="Nome do Jogador" />
+                </Win95Inset>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <span className="text-sm font-bold">Terminal do Sistema</span>
+              <BlinkingText />
+            </div>
+          </div>
+        </Win95Box>
+
+        <div className="w-[350px]">
+          <Win95Box className="p-0 border-2">
+            <div className="bg-[#000080] px-2 py-1 flex justify-between items-center">
+              <span className="text-white font-bold text-sm">Alerta do Sistema</span>
+              <div className="bg-[#C0C0C0] p-[1px] border-t border-l border-white border-b border-r border-black">
+                <X size={12} className="text-black" />
+              </div>
+            </div>
+            <div className="p-4 flex gap-4 items-start bg-[#C0C0C0]">
+              <AlertTriangle size={32} className="text-yellow-500 fill-yellow-500" stroke="black" />
+              <div>
+                <p className="text-sm text-black mb-4">Atencao! Atividade suspeita detetada na tubulacao.</p>
+                <div className="flex justify-end gap-2 mt-4">
+                  <Win95Button>Investigar</Win95Button>
+                  <Win95Button>Ignorar</Win95Button>
+                </div>
+              </div>
+            </div>
+          </Win95Box>
+        </div>
+
+        <Win95Box className="p-4">
+          <h2 className="text-[#000080] font-bold text-lg mb-4 border-b border-[#808080]">4. Jogo de Palavras (Passa a Vez)</h2>
+          <div className="flex gap-6 overflow-x-auto pb-4">
+            <WordGameCard 
+              playerName="Tripulante 1" 
+              secretWord="COMPUTADOR" 
+              isImpostor={false} 
+            />
+            <WordGameCard 
+              playerName="Tripulante 2" 
+              secretWord="COMPUTADOR" 
+              isImpostor={false} 
+            />
+            <WordGameCard 
+              playerName="Tripulante 3" 
+              secretWord="???" 
+              isImpostor={true} 
+            />
+          </div>
+        </Win95Box>
+
+        <Win95Box className="p-4">
+          <h2 className="text-[#000080] font-bold text-lg mb-4 border-b border-[#808080]">5. Lobby & Configuracoes da Sala</h2>
+          <div className="grid grid-cols-2 gap-6">
+            <div>
+              <span className="text-sm font-bold block mb-2">Jogadores Ligados (4/8)</span>
+              <Win95Inset className="h-32 overflow-y-auto bg-white">
+                <table className="w-full text-sm">
+                  <thead className="bg-[#C0C0C0]">
+                    <tr>
+                      <th className="text-left border-r border-b border-[#808080] p-1">Nome</th>
+                      <th className="text-left border-b border-[#808080] p-1">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="p-1 border-r border-[#E0E0E0] font-bold">Jogador 1 (Host)</td>
+                      <td className="p-1 text-green-700">Pronto</td>
+                    </tr>
+                    <tr>
+                      <td className="p-1 border-r border-[#E0E0E0]">Tripulante Azul</td>
+                      <td className="p-1 text-green-700">Pronto</td>
+                    </tr>
+                    <tr>
+                      <td className="p-1 border-r border-[#E0E0E0]">Suspeito007</td>
+                      <td className="p-1 text-[#808080]">A aguardar...</td>
+                    </tr>
+                    <tr>
+                      <td className="p-1 border-r border-[#E0E0E0]">Visitante</td>
+                      <td className="p-1 text-[#808080]">A aguardar...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Win95Inset>
+              <div className="mt-2 flex gap-2">
+                <Win95Button className="w-full">Iniciar Partida</Win95Button>
+              </div>
+            </div>
+            
+            <div>
+              <span className="text-sm font-bold block mb-2">Regras do Jogo</span>
+              <Win95Inset className="p-2 space-y-2 bg-[#C0C0C0]">
+                <Win95Checkbox 
+                  label="Revelar impostor ao ejetar" 
+                  checked={rule1} 
+                  onChange={() => setRule1(!rule1)} 
+                />
+                <Win95Checkbox 
+                  label="Dica de categoria ligada" 
+                  checked={rule2} 
+                  onChange={() => setRule2(!rule2)} 
+                />
+                <div className="mt-4">
+                  <span className="text-sm font-bold block mb-1">Tempo de Votacao (Seg):</span>
+                  <Win95Inset className="bg-white">
+                    <select className="w-full bg-transparent outline-none text-sm cursor-pointer">
+                      <option>30</option>
+                      <option>60</option>
+                      <option>90</option>
+                      <option>120</option>
+                    </select>
+                  </Win95Inset>
+                </div>
+              </Win95Inset>
+            </div>
+          </div>
+        </Win95Box>
+
+        <Win95Box className="p-4">
+          <h2 className="text-[#000080] font-bold text-lg mb-4 border-b border-[#808080]">6. Comunicacao & Votacao</h2>
+          <div className="grid grid-cols-3 gap-6">
+            
+            <div className="col-span-2 flex flex-col gap-2">
+              <span className="text-sm font-bold">Chat da Reuniao</span>
+              <Win95Inset className="flex-1 min-h-[150px] overflow-y-auto bg-white p-2 text-sm space-y-1">
+                <div><span className="font-bold text-red-600">Vermelho:</span> Onde foi o corpo?</div>
+                <div><span className="font-bold text-blue-600">Azul:</span> Na administracao. Eu nao vi ninguem.</div>
+                <div><span className="font-bold text-green-600">Verde:</span> O vermelho esta a mentir, ele nao estava na navegacao!</div>
+              </Win95Inset>
+              <div className="flex gap-2">
+                <Win95Inset className="flex-1">
+                  <input type="text" className="w-full outline-none text-sm p-1" placeholder="Acuse alguem aqui..." />
+                </Win95Inset>
+                <Win95Button>Enviar</Win95Button>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <span className="text-sm font-bold">Tempo Restante</span>
+              <CountdownTimer />
+              <span className="text-sm font-bold mt-2">Painel de Votacao</span>
+              <Win95Inset className="flex-1 bg-[#C0C0C0] p-2 space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-red-600 font-bold">Vermelho</span>
+                  <Win95Button 
+                    onClick={() => setVoted('vermelho')} 
+                    active={voted === 'vermelho'}
+                    className="px-2 py-0 text-xs"
+                  >
+                    Votar
+                  </Win95Button>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-[#808080] font-bold line-through">Amarelo (Morto)</span>
+                  <Win95Button disabled={true} className="px-2 py-0 text-xs">Votar</Win95Button>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-blue-600 font-bold">Azul</span>
+                  <Win95Button 
+                    onClick={() => setVoted('azul')} 
+                    active={voted === 'azul'}
+                    className="px-2 py-0 text-xs"
+                  >
+                    Votar
+                  </Win95Button>
+                </div>
+              </Win95Inset>
+            </div>
+
+          </div>
+        </Win95Box>
+
+        <Win95Box className="p-4">
+          <h2 className="text-[#000080] font-bold text-lg mb-4 border-b border-[#808080]">7. Ecra Mobile: Adicionar Jogadores (Terminal)</h2>
+          <div className="flex justify-center items-center bg-[#808080] py-12 border-2 border-t-black border-l-black border-b-white border-r-white">
+            <TerminalMobileScreen />
+          </div>
+        </Win95Box>
+
+      </div>
+    </div>
+  );
+}

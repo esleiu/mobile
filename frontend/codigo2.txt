@@ -1,0 +1,557 @@
+import 'package:flutter/material.dart';
+
+class AppTheme {
+  static ThemeData build(Brightness brightness) {
+    return ThemeData(
+      useMaterial3: false,
+      fontFamily: 'Courier',
+      scaffoldBackgroundColor: const Color(0xFF008080),
+      appBarTheme: const AppBarTheme(
+        centerTitle: false,
+        backgroundColor: Color(0xFF000080),
+        foregroundColor: Colors.white,
+        elevation: 0,
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      textTheme: const TextTheme(
+        headlineSmall: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        titleLarge: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        titleMedium: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        bodyMedium: TextStyle(color: Colors.black),
+        bodyLarge: TextStyle(color: Colors.black),
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.zero,
+          borderSide: BorderSide(color: Color(0xFF808080), width: 2),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.zero,
+          borderSide: BorderSide(color: Color(0xFF808080), width: 2),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.zero,
+          borderSide: BorderSide(color: Colors.black, width: 2),
+        ),
+      ),
+    );
+  }
+}
+ import 'package:flutter/material.dart';
+import 'pixel_asset_icon.dart';
+
+class AppButton extends StatefulWidget {
+  final String text;
+  final IconData? icon;
+  final String? pixelAsset;
+  final String? pngAsset;
+  final String? badgePixelAsset;
+  final VoidCallback? onPressed;
+  final bool expanded;
+
+  const AppButton({
+    super.key,
+    required this.text,
+    this.icon,
+    this.pixelAsset,
+    this.pngAsset,
+    this.badgePixelAsset,
+    this.onPressed,
+    this.expanded = true,
+  });
+
+  @override
+  State<AppButton> createState() => _AppButtonState();
+}
+
+class _AppButtonState extends State<AppButton> {
+  bool _isPressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = widget.onPressed != null;
+
+    return GestureDetector(
+      onTapDown: enabled ? (_) => setState(() => _isPressed = true) : null,
+      onTapUp: enabled ? (_) => setState(() => _isPressed = false) : null,
+      onTapCancel: enabled ? () => setState(() => _isPressed = false) : null,
+      onTap: widget.onPressed,
+      child: Container(
+        width: widget.expanded ? double.infinity : null,
+        decoration: BoxDecoration(
+          color: const Color(0xFFC0C0C0),
+          border: Border(
+            top: BorderSide(color: _isPressed ? Colors.black : Colors.white, width: 2),
+            left: BorderSide(color: _isPressed ? Colors.black : Colors.white, width: 2),
+            bottom: BorderSide(color: _isPressed ? Colors.white : Colors.black, width: 2),
+            right: BorderSide(color: _isPressed ? Colors.white : Colors.black, width: 2),
+          ),
+        ),
+        padding: EdgeInsets.only(
+          top: _isPressed ? 15 : 14,
+          bottom: _isPressed ? 13 : 14,
+          left: _isPressed ? 17 : 16,
+          right: _isPressed ? 15 : 16,
+        ),
+        child: Row(
+          mainAxisSize: widget.expanded ? MainAxisSize.max : MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (widget.pixelAsset != null || widget.pngAsset != null || widget.icon != null) ...[
+              SizedBox(
+                width: 24,
+                height: 24,
+                child: widget.pngAsset != null
+                    ? Image.asset(widget.pngAsset!, width: 22, height: 22)
+                    : widget.pixelAsset != null
+                        ? PixelAssetIcon(assetPath: widget.pixelAsset!, size: 18, color: enabled ? Colors.black : const Color(0xFF808080))
+                        : Icon(widget.icon, size: 18, color: enabled ? Colors.black : const Color(0xFF808080)),
+              ),
+              const SizedBox(width: 10),
+            ],
+            Flexible(
+              child: Text(
+                widget.text,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: enabled ? Colors.black : const Color(0xFF808080),
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+} import 'package:flutter/material.dart';
+
+class AppCard extends StatelessWidget {
+  final Widget child;
+  final EdgeInsetsGeometry? margin;
+
+  const AppCard({super.key, required this.child, this.margin});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: margin,
+      decoration: const BoxDecoration(
+        color: Color(0xFFC0C0C0),
+        border: Border(
+          top: BorderSide(color: Colors.white, width: 2),
+          left: BorderSide(color: Colors.white, width: 2),
+          bottom: BorderSide(color: Colors.black, width: 2),
+          right: BorderSide(color: Colors.black, width: 2),
+        ),
+      ),
+      child: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: Color(0xFF808080), width: 1),
+            right: BorderSide(color: Color(0xFF808080), width: 1),
+          ),
+        ),
+        padding: const EdgeInsets.all(12.0),
+        child: child,
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+import 'pixel_asset_icon.dart';
+
+class ArcadeBanner extends StatelessWidget {
+  final String title;
+  final String iconAsset;
+  final String? pngAsset;
+  final String? secondaryPngAsset;
+  final String? badgePixelAsset;
+
+  const ArcadeBanner({
+    super.key,
+    required this.title,
+    required this.iconAsset,
+    this.pngAsset,
+    this.secondaryPngAsset,
+    this.badgePixelAsset,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: const Color(0xFF000080),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Row(
+        children: [
+          if (pngAsset != null)
+            Image.asset(pngAsset!, width: 24, height: 24)
+          else
+            PixelAssetIcon(assetPath: iconAsset, size: 20, color: Colors.white),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+          Container(
+            color: const Color(0xFFC0C0C0),
+            padding: const EdgeInsets.all(2),
+            child: const Icon(Icons.close, size: 14, color: Colors.black),
+          )
+        ],
+      ),
+    );
+  }
+}import 'package:flutter/material.dart';
+import 'package:quem_e_o_impostor/shared/widgets/pixel_asset_icon.dart';
+
+class ArcadeChip extends StatelessWidget {
+  final String text;
+  final IconData? icon;
+  final String? pixelAsset;
+
+  const ArcadeChip({super.key, required this.text, this.icon, this.pixelAsset});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(color: Color(0xFF808080), width: 1),
+          left: BorderSide(color: Color(0xFF808080), width: 1),
+          bottom: BorderSide(color: Colors.white, width: 1),
+          right: BorderSide(color: Colors.white, width: 1),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (pixelAsset != null || icon != null) ...[
+            pixelAsset != null
+                ? PixelAssetIcon(assetPath: pixelAsset!, size: 12, color: Colors.black)
+                : Icon(icon, size: 12, color: Colors.black),
+            const SizedBox(width: 4),
+          ],
+          Text(
+            text,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+import 'dart:math';
+import 'package:flutter/material.dart';
+
+class FlipRevealCard extends StatefulWidget {
+  final bool isRevealed;
+  final String hiddenText;
+  final String revealedText;
+  final double height;
+
+  const FlipRevealCard({
+    super.key,
+    required this.isRevealed,
+    required this.hiddenText,
+    required this.revealedText,
+    this.height = 250,
+  });
+
+  @override
+  State<FlipRevealCard> createState() => _FlipRevealCardState();
+}
+
+class _FlipRevealCardState extends State<FlipRevealCard> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _rotation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 550),
+      value: widget.isRevealed ? 1 : 0,
+    );
+    _rotation = Tween<double>(begin: 0, end: pi).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  @override
+  void didUpdateWidget(covariant FlipRevealCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isRevealed == widget.isRevealed) return;
+
+    if (widget.isRevealed) {
+      _controller.forward();
+    } else {
+      _controller.reverse();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: double.infinity,
+        height: widget.height,
+        child: AnimatedBuilder(
+          animation: _rotation,
+          builder: (context, child) {
+            final angle = _rotation.value;
+            final showBack = angle > pi / 2;
+
+            return Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.0015)
+                ..rotateY(angle),
+              child: showBack
+                  ? Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()..rotateY(pi),
+                      child: _buildFace(
+                        context: context,
+                        text: widget.revealedText,
+                        isBack: true,
+                      ),
+                    )
+                  : _buildFace(
+                      context: context,
+                      text: widget.hiddenText,
+                      isBack: false,
+                    ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFace({required BuildContext context, required String text, required bool isBack}) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Color(0xFFC0C0C0),
+        border: Border(
+          top: BorderSide(color: Colors.white, width: 2),
+          left: BorderSide(color: Colors.white, width: 2),
+          bottom: BorderSide(color: Colors.black, width: 2),
+          right: BorderSide(color: Colors.black, width: 2),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            color: const Color(0xFF000080),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  isBack ? 'Resultado.exe' : 'Palavra_Secreta.exe',
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+                Container(
+                  color: const Color(0xFFC0C0C0),
+                  padding: const EdgeInsets.all(2),
+                  child: const Icon(Icons.close, size: 14, color: Colors.black),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.all(4),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(color: Color(0xFF808080), width: 2),
+                  left: BorderSide(color: Color(0xFF808080), width: 2),
+                  bottom: BorderSide(color: Colors.white, width: 2),
+                  right: BorderSide(color: Colors.white, width: 2),
+                ),
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Center(
+                child: Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: isBack && text.toLowerCase().contains('impostor') ? Colors.red : Colors.black,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+import 'package:quem_e_o_impostor/core/services/storage_service.dart';
+import 'configuracao_partida_page.dart';
+
+class JogadoresPage extends StatefulWidget {
+  const JogadoresPage({super.key});
+
+  @override
+  State<JogadoresPage> createState() => _JogadoresPageState();
+}
+
+class _JogadoresPageState extends State<JogadoresPage> {
+  final StorageService _storageService = StorageService();
+  final TextEditingController _nomeController = TextEditingController();
+  final List<String> _jogadores = [];
+  bool _carregando = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarJogadoresSalvos();
+  }
+
+  Future<void> _carregarJogadoresSalvos() async {
+    final jogadores = await _storageService.carregarUltimosJogadores();
+    if (!mounted) return;
+    setState(() {
+      _jogadores.addAll(jogadores);
+      _carregando = false;
+    });
+  }
+
+  Future<void> _salvarJogadores() async {
+    await _storageService.salvarUltimosJogadores(_jogadores);
+  }
+
+  void _processarComando(String comando) async {
+    final val = comando.trim().toUpperCase();
+    if (val.isEmpty) return;
+    
+    _nomeController.clear();
+
+    if (val == 'START') {
+      if (_jogadores.length >= 3) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => ConfiguracaoPartidaPage(jogadores: List<String>.from(_jogadores)),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('ERRO: MINIMO 3 JOGADORES REQUERIDOS.')),
+        );
+      }
+      return;
+    }
+
+    if (val == 'CLEAR') {
+      setState(() {
+        _jogadores.clear();
+      });
+      await _salvarJogadores();
+      return;
+    }
+
+    if (_jogadores.length < 8 && !_jogadores.contains(val)) {
+      setState(() {
+        _jogadores.add(val);
+      });
+      await _salvarJogadores();
+    }
+  }
+
+  @override
+  void dispose() {
+    _nomeController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: const Text('IMPOSTOR_OS v1.0', style: TextStyle(color: Color(0xFF00FF00), fontFamily: 'Courier', fontWeight: FontWeight.bold)),
+        iconTheme: const IconThemeData(color: Color(0xFF00FF00)),
+      ),
+      body: SafeArea(
+        child: _carregando
+            ? const Center(child: CircularProgressIndicator(color: Color(0xFF00FF00)))
+            : Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text('SYSTEM READY.\n', style: TextStyle(color: Color(0xFF00FF00), fontFamily: 'Courier', fontSize: 16)),
+                    if (_jogadores.isNotEmpty) ...[
+                      const Text('--- CONNECTED USERS ---', style: TextStyle(color: Color(0xFF00FF00), fontFamily: 'Courier', fontSize: 16)),
+                      for (int i = 0; i < _jogadores.length; i++)
+                        Text('[${i + 1}] ${_jogadores[i]}', style: const TextStyle(color: Color(0xFF00FF00), fontFamily: 'Courier', fontSize: 16)),
+                      const Text('-----------------------', style: TextStyle(color: Color(0xFF00FF00), fontFamily: 'Courier', fontSize: 16)),
+                    ],
+                    const SizedBox(height: 16),
+                    Text('MAX PLAYERS: 8\nCURRENT: ${_jogadores.length}/8', style: const TextStyle(color: Color(0xFF00FF00), fontFamily: 'Courier', fontSize: 16)),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        const Text('> ', style: TextStyle(color: Color(0xFF00FF00), fontFamily: 'Courier', fontSize: 16)),
+                        Expanded(
+                          child: TextField(
+                            controller: _nomeController,
+                            autofocus: true,
+                            style: const TextStyle(color: Color(0xFF00FF00), fontFamily: 'Courier', fontSize: 16),
+                            cursorColor: const Color(0xFF00FF00),
+                            textInputAction: TextInputAction.done,
+                            onSubmitted: _processarComando,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              fillColor: Colors.transparent,
+                              filled: true,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    const Text("TYPE NAME TO ADD.\nTYPE 'CLEAR' TO REMOVE ALL.\nTYPE 'START' AND PRESS ENTER.", style: TextStyle(color: Color(0xFF008000), fontFamily: 'Courier', fontSize: 14)),
+                  ],
+                ),
+              ),
+      ),
+    );
+  }
+}
