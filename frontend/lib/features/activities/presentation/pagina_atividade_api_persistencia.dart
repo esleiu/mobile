@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/constants/activity_demo_constants.dart';
-import 'package:quem_e_o_impostor/core/constants/pixel_assets.dart';
-import 'package:quem_e_o_impostor/core/constants/pixel_png_assets.dart';
+import 'package:quem_e_o_impostor/core/constants/constantes_demo_atividade.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_pixel.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_png_pixel.dart';
 import 'package:quem_e_o_impostor/core/models/categoria.dart';
-import 'package:quem_e_o_impostor/core/services/palavra_api_service.dart';
-import 'package:quem_e_o_impostor/core/services/storage_service.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_button.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_card.dart';
-import 'package:quem_e_o_impostor/shared/widgets/arcade_sprite_bubble.dart';
+import 'package:quem_e_o_impostor/core/services/servico_api_palavra.dart';
+import 'package:quem_e_o_impostor/core/services/servico_armazenamento.dart';
+import 'package:quem_e_o_impostor/shared/widgets/botao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/cartao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/bolha_sprite_arcade.dart';
 
 class AtividadeApiPersistenciaPage extends StatefulWidget {
   const AtividadeApiPersistenciaPage({super.key});

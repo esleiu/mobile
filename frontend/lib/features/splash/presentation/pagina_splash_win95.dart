@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/constants/win95_assets.dart';
-import 'package:quem_e_o_impostor/core/navigation/app_page_route.dart';
-import 'package:quem_e_o_impostor/core/services/win95_sound_service.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_win95.dart';
+import 'package:quem_e_o_impostor/core/navigation/rota_pagina_app.dart';
+import 'package:quem_e_o_impostor/core/services/servico_som_win95.dart';
 
 class Win95SplashPage extends StatefulWidget {
   final Widget nextPage;

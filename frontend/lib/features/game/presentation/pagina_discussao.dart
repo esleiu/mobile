@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/constants/pixel_assets.dart';
-import 'package:quem_e_o_impostor/core/navigation/app_page_route.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_button.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_card.dart';
-import 'package:quem_e_o_impostor/shared/widgets/arcade_chip.dart';
-import 'package:quem_e_o_impostor/shared/widgets/pixel_asset_icon.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_pixel.dart';
+import 'package:quem_e_o_impostor/core/navigation/rota_pagina_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/botao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/cartao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/etiqueta_arcade.dart';
+import 'package:quem_e_o_impostor/shared/widgets/icone_ativo_pixel.dart';
 
-import 'resultado_page.dart';
+import 'pagina_resultado.dart';
 
 class DiscussaoPage extends StatelessWidget {
   final List<String> jogadores;

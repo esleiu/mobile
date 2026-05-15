@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/constants/pixel_assets.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_pixel.dart';
 import 'package:quem_e_o_impostor/core/models/partida.dart';
-import 'package:quem_e_o_impostor/core/services/storage_service.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_card.dart';
-import 'package:quem_e_o_impostor/shared/widgets/arcade_chip.dart';
-import 'package:quem_e_o_impostor/shared/widgets/pixel_asset_icon.dart';
+import 'package:quem_e_o_impostor/core/services/servico_armazenamento.dart';
+import 'package:quem_e_o_impostor/shared/widgets/cartao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/etiqueta_arcade.dart';
+import 'package:quem_e_o_impostor/shared/widgets/icone_ativo_pixel.dart';
 
 class HistoricoPage extends StatefulWidget {
   const HistoricoPage({super.key});

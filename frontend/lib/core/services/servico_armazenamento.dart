@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:quem_e_o_impostor/core/constants/activity_demo_constants.dart';
-import 'package:quem_e_o_impostor/core/constants/terminal_theme.dart';
+import 'package:quem_e_o_impostor/core/constants/constantes_demo_atividade.dart';
+import 'package:quem_e_o_impostor/core/constants/tema_terminal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:quem_e_o_impostor/core/models/partida.dart';
 

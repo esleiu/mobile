@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:quem_e_o_impostor/core/constants/pixel_assets.dart';
-import 'package:quem_e_o_impostor/core/constants/pixel_png_assets.dart';
-import 'package:quem_e_o_impostor/core/navigation/app_page_route.dart';
-import 'package:quem_e_o_impostor/features/activities/presentation/atividade_api_persistencia_page.dart';
-import 'package:quem_e_o_impostor/features/activities/presentation/atividade_eventos_page.dart';
-import 'package:quem_e_o_impostor/features/activities/presentation/atividade_layout_page.dart';
-import 'package:quem_e_o_impostor/features/game/presentation/jogadores_page.dart';
-import 'package:quem_e_o_impostor/features/history/presentation/historico_page.dart';
-import 'package:quem_e_o_impostor/features/settings/presentation/configuracoes_page.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_button.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_card.dart';
-import 'package:quem_e_o_impostor/shared/widgets/arcade_banner.dart';
-import 'package:quem_e_o_impostor/shared/widgets/arcade_chip.dart';
-import 'package:quem_e_o_impostor/shared/widgets/arcade_sprite_bubble.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_pixel.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_png_pixel.dart';
+import 'package:quem_e_o_impostor/core/navigation/rota_pagina_app.dart';
+import 'package:quem_e_o_impostor/features/activities/presentation/pagina_atividade_api_persistencia.dart';
+import 'package:quem_e_o_impostor/features/activities/presentation/pagina_atividade_eventos.dart';
+import 'package:quem_e_o_impostor/features/activities/presentation/pagina_atividade_layout.dart';
+import 'package:quem_e_o_impostor/features/game/presentation/pagina_jogadores.dart';
+import 'package:quem_e_o_impostor/features/history/presentation/pagina_historico.dart';
+import 'package:quem_e_o_impostor/features/settings/presentation/pagina_configuracoes.dart';
+import 'package:quem_e_o_impostor/shared/widgets/botao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/cartao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/faixa_arcade.dart';
+import 'package:quem_e_o_impostor/shared/widgets/etiqueta_arcade.dart';
+import 'package:quem_e_o_impostor/shared/widgets/bolha_sprite_arcade.dart';
 
 class HomePage extends StatelessWidget {
   final bool isDarkMode;
@@ -143,6 +143,30 @@ class HomePage extends StatelessWidget {
                             const Text(
                               'Demonstracoes didaticas de layout responsivo, eventos e uso de API com persistencia local.',
                             ),
+                            const SizedBox(height: 10),
+                            const _AtividadeInfoItem(
+                              titulo: 'Layout Responsivo',
+                              descricao:
+                                  'Tela unica com 3 secoes, usando LayoutBuilder, Column/Row, Expanded/Flexible e espacamentos.',
+                              arquivo:
+                                  'lib/features/activities/presentation/pagina_atividade_layout.dart',
+                            ),
+                            const SizedBox(height: 8),
+                            const _AtividadeInfoItem(
+                              titulo: 'Tratamento de Eventos',
+                              descricao:
+                                  'TextField com onChanged, botoes com comportamentos diferentes, gestos e encadeamento com feedback.',
+                              arquivo:
+                                  'lib/features/activities/presentation/pagina_atividade_eventos.dart',
+                            ),
+                            const SizedBox(height: 8),
+                            const _AtividadeInfoItem(
+                              titulo: 'API + Persistencia Local',
+                              descricao:
+                                  'Consumo da API de categorias e salvamento local com SharedPreferences (salvar, carregar e limpar).',
+                              arquivo:
+                                  'lib/features/activities/presentation/pagina_atividade_api_persistencia.dart',
+                            ),
                             const SizedBox(height: 12),
                             AppButton(
                               text: 'Tela de Layout',
@@ -186,6 +210,61 @@ class HomePage extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class _AtividadeInfoItem extends StatelessWidget {
+  final String titulo;
+  final String descricao;
+  final String arquivo;
+
+  const _AtividadeInfoItem({
+    required this.titulo,
+    required this.descricao,
+    required this.arquivo,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: const BoxDecoration(
+        color: Color(0xFFE6E6E6),
+        border: Border(
+          top: BorderSide(color: Colors.white, width: 1),
+          left: BorderSide(color: Colors.white, width: 1),
+          right: BorderSide(color: Colors.black, width: 1),
+          bottom: BorderSide(color: Colors.black, width: 1),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            titulo,
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 13,
+              fontFamily: 'Courier',
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            descricao,
+            style: const TextStyle(fontSize: 12, fontFamily: 'Courier'),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Arquivo: $arquivo',
+            style: const TextStyle(
+              fontSize: 11,
+              fontFamily: 'Courier',
+              color: Color(0xFF333333),
+            ),
+          ),
+        ],
       ),
     );
   }

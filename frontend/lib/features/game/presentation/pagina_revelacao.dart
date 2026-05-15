@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/constants/pixel_assets.dart';
-import 'package:quem_e_o_impostor/core/navigation/app_page_route.dart';
-import 'package:quem_e_o_impostor/core/services/palavra_api_service.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_button.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_card.dart';
-import 'package:quem_e_o_impostor/shared/widgets/flip_reveal_card.dart';
-import 'package:quem_e_o_impostor/shared/widgets/pixel_asset_icon.dart';
-import 'package:quem_e_o_impostor/shared/widgets/player_avatar.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_pixel.dart';
+import 'package:quem_e_o_impostor/core/navigation/rota_pagina_app.dart';
+import 'package:quem_e_o_impostor/core/services/servico_api_palavra.dart';
+import 'package:quem_e_o_impostor/shared/widgets/botao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/cartao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/cartao_revelacao_flip.dart';
+import 'package:quem_e_o_impostor/shared/widgets/icone_ativo_pixel.dart';
+import 'package:quem_e_o_impostor/shared/widgets/avatar_jogador.dart';
 
-import 'discussao_page.dart';
+import 'pagina_discussao.dart';
 
 class RevelacaoPage extends StatefulWidget {
   final List<String> jogadores;

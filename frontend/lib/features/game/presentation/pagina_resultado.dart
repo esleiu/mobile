@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/constants/pixel_assets.dart';
-import 'package:quem_e_o_impostor/core/constants/pixel_png_assets.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_pixel.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_png_pixel.dart';
 import 'package:quem_e_o_impostor/core/models/partida.dart';
-import 'package:quem_e_o_impostor/core/navigation/app_page_route.dart';
-import 'package:quem_e_o_impostor/core/services/storage_service.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_button.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_card.dart';
-import 'package:quem_e_o_impostor/shared/widgets/arcade_banner.dart';
-import 'package:quem_e_o_impostor/shared/widgets/player_avatar.dart';
+import 'package:quem_e_o_impostor/core/navigation/rota_pagina_app.dart';
+import 'package:quem_e_o_impostor/core/services/servico_armazenamento.dart';
+import 'package:quem_e_o_impostor/features/home/presentation/pagina_inicial.dart';
+import 'package:quem_e_o_impostor/features/splash/presentation/pagina_splash_win95.dart';
+import 'package:quem_e_o_impostor/shared/widgets/botao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/cartao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/faixa_arcade.dart';
+import 'package:quem_e_o_impostor/shared/widgets/avatar_jogador.dart';
 
-import 'configuracao_partida_page.dart';
-import 'jogadores_page.dart';
+import 'pagina_configuracao_partida.dart';
+import 'pagina_jogadores.dart';
 
 class ResultadoPage extends StatefulWidget {
   final List<String> jogadores;
@@ -33,6 +35,20 @@ class ResultadoPage extends StatefulWidget {
 class _ResultadoPageState extends State<ResultadoPage> {
   final StorageService _storageService = StorageService();
   bool _salvouNoHistorico = false;
+
+  Future<void> _noopThemeChange(bool _) async {}
+
+  void _voltarAoInicioComSplash() {
+    final homePage = HomePage(
+      isDarkMode: false,
+      onThemeChanged: _noopThemeChange,
+    );
+
+    Navigator.of(context).pushAndRemoveUntil(
+      appPageRoute(Win95SplashPage(nextPage: homePage)),
+      (route) => false,
+    );
+  }
 
   @override
   void initState() {
@@ -167,8 +183,7 @@ class _ResultadoPageState extends State<ResultadoPage> {
                 AppButton(
                   text: 'Voltar ao inicio',
                   pixelAsset: PixelAssets.mask,
-                  onPressed: () =>
-                      Navigator.of(context).popUntil((route) => route.isFirst),
+                  onPressed: _voltarAoInicioComSplash,
                 ),
               ],
             ),

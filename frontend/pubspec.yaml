@@ -59,7 +59,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/pixel/
-    - assets/pixel_png/
     - assets/win95_icons/
     - assets/sounds/win95/
 

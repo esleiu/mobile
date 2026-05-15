@@ -44,7 +44,7 @@ class AppTheme {
   }
 }
  import 'package:flutter/material.dart';
-import 'pixel_asset_icon.dart';
+import 'icone_ativo_pixel.dart';
 
 class AppButton extends StatefulWidget {
   final String text;
@@ -167,7 +167,7 @@ class AppCard extends StatelessWidget {
   }
 }
 import 'package:flutter/material.dart';
-import 'pixel_asset_icon.dart';
+import 'icone_ativo_pixel.dart';
 
 class ArcadeBanner extends StatelessWidget {
   final String title;
@@ -218,7 +218,7 @@ class ArcadeBanner extends StatelessWidget {
     );
   }
 }import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/shared/widgets/pixel_asset_icon.dart';
+import 'package:quem_e_o_impostor/shared/widgets/icone_ativo_pixel.dart';
 
 class ArcadeChip extends StatelessWidget {
   final String text;
@@ -419,8 +419,8 @@ class _FlipRevealCardState extends State<FlipRevealCard> with SingleTickerProvid
   }
 }
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/services/storage_service.dart';
-import 'configuracao_partida_page.dart';
+import 'package:quem_e_o_impostor/core/services/servico_armazenamento.dart';
+import 'pagina_configuracao_partida.dart';
 
 class JogadoresPage extends StatefulWidget {
   const JogadoresPage({super.key});

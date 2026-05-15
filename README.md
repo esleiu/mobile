@@ -49,7 +49,7 @@ Pasta: [`frontend`](C:/Users/bbbrr/Downloads/teste/quem_e_o_impostor/frontend)
 
 ### URL da API
 
-Configurada em [`api_config.dart`](C:/Users/bbbrr/Downloads/teste/quem_e_o_impostor/frontend/lib/core/services/api_config.dart):
+Configurada em [`configuracao_api.dart`](C:/Users/bbbrr/Downloads/teste/quem_e_o_impostor/frontend/lib/core/services/configuracao_api.dart):
 
 - Padrao (emulador Android): `http://10.0.2.2:3000`
 - Pode sobrescrever com `--dart-define=API_BASE_URL=...`
@@ -81,7 +81,7 @@ npm start
 http://192.168.0.20:3000
 ```
 
-Se abrir o JSON da API, a rede está ok.
+Se abrir o JSON da API, a rede esta ok.
 
 5. Rode o app Flutter apontando para esse IP com `--dart-define`:
 
@@ -127,6 +127,47 @@ flutter run --dart-define=API_BASE_URL=http://192.168.0.20:3000
 - Atividade Layout
 - Atividade Eventos
 - Atividade API + Persistencia
+
+## Detalhamento das telas de atividade
+
+### 1) Atividade de Layout Responsivo
+
+- **Tela:** [pagina_atividade_layout.dart](C:/Users/bbbrr/Downloads/teste/quem_e_o_impostor/frontend/lib/features/activities/presentation/pagina_atividade_layout.dart)
+- **Objetivo:** demonstrar estrutura de widgets e responsividade minima.
+- **O que ela mostra:**
+  - 3 secoes visuais (cabecalho, conteudo e acoes);
+  - uso de `Column`/`Row`, `Expanded`/`Flexible`, `Padding`/`SizedBox`;
+  - troca de layout por largura com `LayoutBuilder`:
+    - `< 600`: layout mobile;
+    - `>= 600`: layout wide.
+- **Observacao:** tela didatica, sem API e sem persistencia.
+
+### 2) Atividade de Tratamento de Eventos
+
+- **Tela:** [pagina_atividade_eventos.dart](C:/Users/bbbrr/Downloads/teste/quem_e_o_impostor/frontend/lib/features/activities/presentation/pagina_atividade_eventos.dart)
+- **Objetivo:** demonstrar ciclo de eventos (acao -> processamento -> feedback).
+- **Eventos implementados:**
+  - `TextField` com `onChanged` e validacao em tempo real (minimo 3 caracteres);
+  - botao **Adicionar jogador** com `onPressed` condicional;
+  - botao **Limpar lista** com confirmacao via `AlertDialog`;
+  - area de gesto com `InkWell`:
+    - `onTap` (SnackBar com dica);
+    - `onLongPress` (AlertDialog com regras).
+- **Encadeamento:** ao adicionar o 3o jogador, dispara automaticamente dialogo de minimo atingido.
+
+### 3) Atividade de API + Persistencia Local
+
+- **Tela:** [pagina_atividade_api_persistencia.dart](C:/Users/bbbrr/Downloads/teste/quem_e_o_impostor/frontend/lib/features/activities/presentation/pagina_atividade_api_persistencia.dart)
+- **Objetivo:** comprovar consumo de API e armazenamento local no dispositivo.
+- **Bloco API:**
+  - busca categorias no backend (`GET /categorias`);
+  - trata loading, sucesso e erro amigavel.
+- **Bloco Persistencia Local:**
+  - salva, carrega e limpa anotacao de teste com `SharedPreferences`;
+  - feedback visual com `SnackBar`.
+- **Servicos relacionados:**
+  - [servico_api_palavra.dart](C:/Users/bbbrr/Downloads/teste/quem_e_o_impostor/frontend/lib/core/services/servico_api_palavra.dart)
+  - [servico_armazenamento.dart](C:/Users/bbbrr/Downloads/teste/quem_e_o_impostor/frontend/lib/core/services/servico_armazenamento.dart)
 
 ## Comandos uteis
 

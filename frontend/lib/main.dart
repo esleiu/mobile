@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/services/win95_sound_service.dart';
+import 'package:quem_e_o_impostor/core/services/servico_som_win95.dart';
 
-import 'core/theme/app_theme.dart';
-import 'features/home/presentation/home_page.dart';
-import 'features/splash/presentation/win95_splash_page.dart';
+import 'core/theme/tema_app.dart';
+import 'features/home/presentation/pagina_inicial.dart';
+import 'features/splash/presentation/pagina_splash_win95.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

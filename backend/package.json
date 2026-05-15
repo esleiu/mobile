@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "API do jogo Quem e o Impostor",
-  "main": "server.js",
+  "main": "servidor.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node servidor.js"
   },
   "keywords": [],
   "author": "",

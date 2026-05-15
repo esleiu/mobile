@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/services/win95_sound_service.dart';
+import 'package:quem_e_o_impostor/core/services/servico_som_win95.dart';
 
-import 'pixel_asset_icon.dart';
+import 'icone_ativo_pixel.dart';
 
 class AppButton extends StatefulWidget {
   final String text;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/constants/pixel_assets.dart';
-import 'package:quem_e_o_impostor/core/constants/terminal_theme.dart';
-import 'package:quem_e_o_impostor/core/services/storage_service.dart';
-import 'package:quem_e_o_impostor/core/services/win95_sound_service.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_button.dart';
-import 'package:quem_e_o_impostor/shared/widgets/app_card.dart';
-import 'package:quem_e_o_impostor/shared/widgets/arcade_chip.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_pixel.dart';
+import 'package:quem_e_o_impostor/core/constants/tema_terminal.dart';
+import 'package:quem_e_o_impostor/core/services/servico_armazenamento.dart';
+import 'package:quem_e_o_impostor/core/services/servico_som_win95.dart';
+import 'package:quem_e_o_impostor/shared/widgets/botao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/cartao_app.dart';
+import 'package:quem_e_o_impostor/shared/widgets/etiqueta_arcade.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
   final bool isDarkMode;

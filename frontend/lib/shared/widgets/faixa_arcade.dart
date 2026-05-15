@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pixel_asset_icon.dart';
+import 'icone_ativo_pixel.dart';
 
 class ArcadeBanner extends StatelessWidget {
   final String title;

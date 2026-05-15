@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/core/constants/terminal_theme.dart';
-import 'package:quem_e_o_impostor/core/navigation/app_page_route.dart';
-import 'package:quem_e_o_impostor/core/services/storage_service.dart';
-import 'package:quem_e_o_impostor/core/services/win95_sound_service.dart';
+import 'package:quem_e_o_impostor/core/constants/tema_terminal.dart';
+import 'package:quem_e_o_impostor/core/navigation/rota_pagina_app.dart';
+import 'package:quem_e_o_impostor/core/services/servico_armazenamento.dart';
+import 'package:quem_e_o_impostor/core/services/servico_som_win95.dart';
 
-import 'configuracao_partida_page.dart';
+import 'pagina_configuracao_partida.dart';
 
 class JogadoresPage extends StatefulWidget {
   const JogadoresPage({super.key});

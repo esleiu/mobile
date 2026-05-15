@@ -1,4 +1,4 @@
-import 'package:quem_e_o_impostor/core/constants/win95_assets.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_win95.dart';
 
 class PixelAssets {
   static const String mask = Win95Assets.help;

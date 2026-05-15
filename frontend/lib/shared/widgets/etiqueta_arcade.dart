@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quem_e_o_impostor/shared/widgets/pixel_asset_icon.dart';
+import 'package:quem_e_o_impostor/shared/widgets/icone_ativo_pixel.dart';
 
 class ArcadeChip extends StatelessWidget {
   final String text;

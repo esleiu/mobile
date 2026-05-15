@@ -1,4 +1,4 @@
-import 'package:quem_e_o_impostor/core/constants/pixel_png_assets.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_png_pixel.dart';
 
 class PlayerAvatarService {
   static String avatarForPlayer(String nome) {

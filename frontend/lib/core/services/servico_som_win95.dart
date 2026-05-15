@@ -1,5 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:quem_e_o_impostor/core/constants/win95_sound_assets.dart';
+import 'package:quem_e_o_impostor/core/constants/ativos_som_win95.dart';
 
 class Win95SoundService {
   Win95SoundService._();

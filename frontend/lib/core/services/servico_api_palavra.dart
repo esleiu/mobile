@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:quem_e_o_impostor/core/models/categoria.dart';
-import 'package:quem_e_o_impostor/core/services/api_config.dart';
+import 'package:quem_e_o_impostor/core/services/configuracao_api.dart';
 
 class PalavraApiService {
   final http.Client _client;
